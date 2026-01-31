@@ -117,7 +117,8 @@ sources:
                         Visit_Date=Visit_Date,
                         Title=Title,
                         URL=URL,
-                        Last_Visit_Date=Last_Visit_Date
+                        Last_Visit_Date=Last_Visit_Date,
+                        OSPath=OSPath
                     ) as ArtifactData,
                     URL as VisitedURL
                 FROM foreach(row=ChromiumHistoryFile,
@@ -127,7 +128,8 @@ sources:
                             timestamp(epoch=(Visit_Date - 11644473600)) AS Visit_Date,
                             Title,
                             URL,
-                            timestamp(epoch=(Last_Visit_Date - 11644473600)) AS Last_Visit_Date
+                            timestamp(epoch=(Last_Visit_Date - 11644473600)) AS Last_Visit_Date,
+                            OSPath
                         FROM sqlite(
                           file=OSPath,
                           query=ChromiumURL)
@@ -144,7 +146,8 @@ sources:
                         Target_Path=Target_Path,
                         Tab_URL=Tab_URL,
                         Tab_Referrer_URL=Tab_Referrer_URL,
-                        Mime_Type=Mime_Type
+                        Mime_Type=Mime_Type,
+                        OSPath=OSPath
                     ) as ArtifactData,
                     Tab_URL as VisitedURL
                 FROM foreach(row=ChromiumHistoryFile,
@@ -156,7 +159,8 @@ sources:
                             Target_Path, 
                             Tab_URL, 
                             Tab_Referrer_URL, 
-                            Mime_Type
+                            Mime_Type,
+                            OSPath
                         FROM sqlite(
                             file=OSPath,
                             query=ChromiumDownload)
@@ -172,7 +176,8 @@ sources:
                         Visit_Date=Visit_Date,
                         Title=Title,
                         URL=URL,
-                        Last_Visit_Date=Last_Visit_Date
+                        Last_Visit_Date=Last_Visit_Date,
+                        OSPath=OSPath
                     ) as ArtifactData
                 FROM foreach(row=FirefoxHistoryFile,
                     query={
@@ -181,7 +186,8 @@ sources:
                             timestamp(epoch=Visit_Date /1000000) AS Visit_Date,
                             Title,
                             URL,
-                            timestamp(epoch=Last_Visit_Date/1000000) AS Last_Visit_Date
+                            timestamp(epoch=Last_Visit_Date/1000000) AS Last_Visit_Date,
+                            OSPath
                         FROM sqlite(
                           file=OSPath,
                           query=FirefoxURL)
@@ -197,7 +203,8 @@ sources:
                         Download_Date=Download_Date,
                         Content=Content,
                         Places_URL=Places_URL,
-                        Last_Modified_Date=Last_Modified_Date
+                        Last_Modified_Date=Last_Modified_Date,
+                        OSPath=OSPath
                     ) as ArtifactData
                 FROM foreach(row=FirefoxHistoryFile,
                     query={
@@ -206,7 +213,8 @@ sources:
                         timestamp(epoch=Download_Date/1000000) AS Download_Date,
                         Content,
                         Places_URL,
-                        timestamp(epoch=Last_Modified_Date/1000000) AS Last_Modified_Date
+                        timestamp(epoch=Last_Modified_Date/1000000) AS Last_Modified_Date,
+                        OSPath
                     FROM sqlite(
                       file=OSPath,
                       query=FirefoxDownload)
